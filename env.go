@@ -13,5 +13,7 @@ type Env[T api.Commands] interface {
 func RunTests[T api.Commands](t *testing.T, env Env[T]) {
 	TestAcquireSession(t, env)
 	TestCreateSession(t, env)
+	TestInfrastructure(t, env)
 	TestOffloadSession(t, env)
+	TestOnloadSession(t, env)
 }

@@ -21,7 +21,7 @@ func TestOffloadSession[T api.Commands](t *testing.T, env Env[T]) {
 		t.Errorf("failed to create a session: %v", err)
 	}
 
-	offloadedTo, err := cmd.AcquireSession(context.Background(), sessionId, api.NewAcquireSessionOptionsBuilder().Build())
+	offloadedTo, err := cmd.AcquireSession(context.Background(), sessionId, api.NewAcquireSessionOptionsBuilder().AllowOffloading().Build())
 	// Check the result.
 	if err != nil {
 		t.Errorf("failed to acquire a session: %v", err)
@@ -52,8 +52,8 @@ func TestOffloadSession[T api.Commands](t *testing.T, env Env[T]) {
 	// Acquire the offloaded session.
 	offloadedTo, err = cmd.AcquireSession(context.Background(), sessionId, api.NewAcquireSessionOptionsBuilder().Build())
 	// Check the result.
-	if err != nil {
-		t.Errorf("failed to acquire a session: %v", err)
+	if err == nil {
+		t.Errorf("acquiring an offloading session should return an error, got %v", err)
 	} //else if err != api.ErrSessionIsOffloading {
 	// t.Errorf("acquiring an offloading session should return ErrSessionIsOffloading, got %v", err)
 	// }
