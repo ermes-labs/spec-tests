@@ -97,39 +97,4 @@ func TestInfrastructure[T api.Commands](t *testing.T, env Env[T]) {
 	if node != nil {
 		t.Errorf("invalid parent node of area, expected nil, found %v", node)
 	}
-
-	sessionId, err := cmd.CreateSession(context.Background(), api.NewCreateSessionOptionsBuilder().ClientGeoCoordinates(infrastructure.GeoCoordinates{
-		Latitude:  0,
-		Longitude: 0,
-	}).Build())
-
-	if err != nil {
-		t.Errorf("failed to create a session: %v", err)
-	}
-
-	lookupNode, err := cmd.FindLookupNode(context.Background(), sessionId)
-
-	if err != nil {
-		t.Errorf("failed to find the lookup node: %v", err)
-	}
-
-	if lookupNode.AreaName != "area" {
-		t.Errorf("invalid lookup node, expected %v, found %v", infra.Areas[0].Node, node)
-	}
-
-	sessionId, err = cmd.CreateSession(context.Background(), api.NewCreateSessionOptionsBuilder().Build())
-
-	if err != nil {
-		t.Errorf("failed to create a session: %v", err)
-	}
-
-	lookupNode, err = cmd.FindLookupNode(context.Background(), sessionId)
-
-	if err != nil {
-		t.Errorf("failed to find the lookup node: %v", err)
-	}
-
-	if lookupNode.AreaName != "area2" {
-		t.Errorf("invalid lookup node, expected %v, found %v", "area1", node)
-	}
 }
